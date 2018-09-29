@@ -1,6 +1,11 @@
+
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using DotnetCoreVue.DB.EFModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DotnetCoreVue.Controllers
 {
@@ -27,12 +32,40 @@ namespace DotnetCoreVue.Controllers
         [HttpPost]
         public IActionResult GetNav()
         {
-            var nodes = db.Node.ToList();
-            foreach(Node item in nodes)
-            {
-                
-            }
-            return Json(nodes);
+            var nodes = db.Node.Where(item =>item.Pid==0).ToList();
+            StringBuilder routes=new StringBuilder("[{ name: 'fetch-data',path: '/fetch-data', component(resolve){ require([\"../components/fetch-data.vue\"],resolve) }}]");
+            // foreach(Node item in nodes)
+            // {
+                 
+            //     List<Node> childList=db.Node.Where(c =>c.Pid==item.Id).ToList();
+            //     if(childList.Count==0)
+            //     {
+            //         if(!string.IsNullOrEmpty(routes.ToString()))
+            //         {
+            //             routes.Append(",");
+            //         }
+            //         routes.Append("{name:'"+item.Name+"',path:'"+item.Path+"',component(resolve){require(['../components/"+item.Com+"'],resolve)}}");
+                   
+            //     }
+            //     else
+            //     {
+            //         if(!string.IsNullOrEmpty(routes.ToString()))
+            //         {
+            //             routes.Append(",");
+            //         }
+            //         StringBuilder strChildren=new StringBuilder();
+            //         foreach(Node child in childList)
+            //         {
+                        
+            //             strChildren.Append("{name:'"+child.Name+"',path:'"+child.Path+"',component(resolve){require(['../components/"+child.Com+"'],resolve)}}");
+            //         }
+                    
+            //          routes.Append("{name:'"+item.Name+"',path:'"+item.Path+"',component(resolve){require(['../components/"+item.Com+"'],resolve)},children:["+strChildren+"]}");
+            //     }
+            //     childList=null;
+            // }
+            // routes.Insert(0,"[").Append("]");//在前后分别补加[ 和 ]，包装成js数组的样子。
+            return Json(routes);
         }
 
         /// <summary>
@@ -49,7 +82,7 @@ namespace DotnetCoreVue.Controllers
                 code="1";
             }
             return Json(new {
-                code="2",
+                code,
                 username,
                 password
             });

@@ -34,15 +34,15 @@ export default {
       },
       methods: {
           onSubmit() {
-              this.$http.post('/home/Login', { username: this.loginname, password: this.password })
+              this.$http.post('/home/Login', { username: this.form.loginname, password: this.form.password })
                   .then(response => {
                       console.log(response);
                       this.$http.post('/home/GetNav')
                       .then(response => {
-                          console.log(response.data);
-                          response.data.forEach(element => {
-                              const arr=[];
-                          });
+                          const aa="[{ name: 'fetch-data',path: '/fetch-data', component(resolve) { require(['../components/fetch-data.vue'],resolve) }}]";
+                          this.$router.addRoutes(eval(aa));
+                          
+                          //console.log(response.data.m_StringValue,eval(response.data.m_StringValue));
                       })
                       .catch((error) => console.log(error))
                   })

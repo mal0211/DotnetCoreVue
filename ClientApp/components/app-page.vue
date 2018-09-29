@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid">
+        也买
         <div class="row">
             <div class="col-md-3">
                 <nav-menu params="route: route"></nav-menu>
