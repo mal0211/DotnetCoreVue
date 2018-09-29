@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <div>
         <h1>Weather forecast</h1>
 
@@ -52,7 +52,6 @@ export default {
       return Math.ceil(this.total / this.pageSize)
     }
   },
-
   data () {
     return {
       forecasts: null,
@@ -61,13 +60,11 @@ export default {
       currentPage: 1
     }
   },
-
   methods: {
     async loadPage (page) {
       // ES2017 async/await syntax via babel-plugin-transform-async-to-generator
       // TypeScript can also transpile async/await down to ES5
       this.currentPage = page
-
       try {
         var from = (page - 1) * (this.pageSize)
         var to = from + this.pageSize
@@ -89,7 +86,6 @@ export default {
       //    .catch((error) => console.log(error))*/
     }
   },
-
   async created () {
     this.loadPage(1)
   }

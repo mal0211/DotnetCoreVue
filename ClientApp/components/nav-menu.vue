@@ -1,4 +1,4 @@
-﻿<template>
+<template>
     <div class="main-nav">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <button class="navbar-toggler" type="button" @click="toggleCollapsed">
@@ -24,23 +24,27 @@
     </div>
 </template>
 
-<script>
-    import { routes } from '../router/routes'
-
-    export default {
-      data () {
-        return {
-          routes,
-          collapsed: true
-        }
+<script>export default {
+      data() {
+          return {
+              routes: [],
+              collapsed: true
+          }
       },
       methods: {
-        toggleCollapsed: function (event) {
-          this.collapsed = !this.collapsed
-        }
+          toggleCollapsed: function(event) {
+              this.collapsed = !this.collapsed
+          }
+      },
+      mounted() {
+          this.$http.post('/Home/test')
+              .then(response => {
+                  console.log(response)
+                  //this.radio = response.data
+              })
+              .catch((error) => console.log(error))
       }
-    }
-</script>
+}</script>
 
 <style scoped>
     .slide-enter-active, .slide-leave-active {
@@ -49,7 +53,6 @@
     .slide-enter, .slide-leave-to {
     max-height: 0px;
     }
-
     .slide-enter-to, .slide-leave {
     max-height: 20em;
     }
