@@ -33,7 +33,19 @@ namespace DotnetCoreVue.Controllers
         public IActionResult GetNav()
         {
             var nodes = db.Node.Where(item =>item.Pid==0).ToList();
-            StringBuilder routes=new StringBuilder("[{ name: 'fetch-data',path: '/fetch-data', component(resolve){ require([\"../components/fetch-data.vue\"],resolve) }}]");
+            var routes=nodes.Select(a =>new {
+                name=a.Name,
+                path =a.Path,
+                com =a.Com,
+                children=db.Node.Where(b =>b.Pid==a.Id).Select(c =>new {
+                    name=c.Name,
+                    path =c.Path,
+                    com =c.Com
+                })
+            });
+            return Json(routes);
+            #region old Test ,just save a moment
+            // StringBuilder routes=new StringBuilder();
             // foreach(Node item in nodes)
             // {
                  
@@ -65,7 +77,8 @@ namespace DotnetCoreVue.Controllers
             //     childList=null;
             // }
             // routes.Insert(0,"[").Append("]");//在前后分别补加[ 和 ]，包装成js数组的样子。
-            return Json(routes);
+            // return Json(routes);
+            #endregion
         }
 
         /// <summary>

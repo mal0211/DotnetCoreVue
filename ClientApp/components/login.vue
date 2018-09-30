@@ -23,7 +23,9 @@
   </div>
 </template>
 <script>
+
 export default {
+    
       data() {
           return {
               form: {
@@ -34,26 +36,46 @@ export default {
       },
       methods: {
           onSubmit() {
-              this.$http.post('/home/Login', { username: this.form.loginname, password: this.form.password })
+              var _self=this;
+              _self.$http.post('/home/Login', { username: this.form.loginname, password: this.form.password })
                   .then(response => {
-                      console.log(response);
-                      this.$http.post('/home/GetNav')
+                      _self.$http.post('/home/GetNav')
                       .then(response => {
-                        //   const aa="[{ name: 'fetch-data',path: '/fetch-data', component(resolve) { require(['../components/fetch-data.vue'],resolve) }}]";
-                        //   this.$router.addRoutes(eval(aa));
-                          
-                          //console.log(response.data.m_StringValue,eval(response.data.m_StringValue));
+                        var addRouteConfig=[];
+                         addRouteConfig=convertRouteMap(response.data);                        
+                        _self.$router.addRoutes(addRouteConfig);
+                        console.log(addRouteConfig);
                       })
                       .catch((error) => console.log(error))
                   })
                   .catch((error) => console.log(error))
-          },
-          GetNav() {
-              this.$http.post('/home/GetNav')
-                  .then(response => {
-                      console.log(response.data);
-                  })
-                  .catch((error) => console.log(error))
           }
       }
-};</script>
+};
+/**
+ * 后台返回的node数据转换为route
+ * @param menus
+ * @returns {Array}
+ */
+function convertRouteMap(nodes) {
+  let routers = [];
+  if (nodes) {
+      for (let node of nodes) {          
+          const componentVal = resolve => {
+             require([''+node.com], resolve)
+          };
+           console.log(node.com);
+          let route = {path: node.path,name: node.name, component: componentVal};
+          if (node.children) {
+              route.children = convertRouteMap(node.children);
+          }
+          if (node.redirect) {
+              route.redirect = node.redirect;
+          }
+          routers.push(route);
+      }
+  }
+  
+  return routers; 
+}
+</script>
