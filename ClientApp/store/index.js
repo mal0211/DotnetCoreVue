@@ -8,7 +8,8 @@ const MAIN_SET_COUNTER = 'MAIN_SET_COUNTER'
 
 // STATE
 const state = {
-  counter: 1
+  counter: 1,
+  menuList:[]
 }
 
 // MUTATIONS

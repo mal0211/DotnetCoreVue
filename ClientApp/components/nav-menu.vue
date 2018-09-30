@@ -12,7 +12,7 @@
             <transition name="slide">
                 <div :class="'collapse navbar-collapse' + (!collapsed ? ' show':'')" v-show="!collapsed">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item" v-for="(route, index) in routes" :key="index">
+                        <li class="nav-item" v-for="(route, index) in routes[0].children" :key="index">
                             <router-link :to="route.path" exact-active-class="active">
                                 <icon :icon="route.icon" class="mr-2" /><span>{{ route.display }}</span> 
                             </router-link>
@@ -24,10 +24,11 @@
     </div>
 </template>
 
-<script>export default {
+<script>
+export default {
       data() {
           return {
-              routes: [],
+              routes: this.$store.state.menuList,
               collapsed: true
           }
       },
@@ -36,13 +37,8 @@
               this.collapsed = !this.collapsed
           }
       },
-      mounted() {
-          this.$http.post('/Home/test')
-              .then(response => {
-                  console.log(response)
-                  //this.radio = response.data
-              })
-              .catch((error) => console.log(error))
+      created(){
+          console.log(this.$store.state.menuList);
       }
 }</script>
 

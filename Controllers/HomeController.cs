@@ -40,45 +40,12 @@ namespace DotnetCoreVue.Controllers
                 children=db.Node.Where(b =>b.Pid==a.Id).Select(c =>new {
                     name=c.Name,
                     path =c.Path,
-                    com =c.Com
+                    com =c.Com,
+                    display=c.DisplayName,
+                    icon =c.Icon
                 })
             });
-            return Json(routes);
-            #region old Test ,just save a moment
-            // StringBuilder routes=new StringBuilder();
-            // foreach(Node item in nodes)
-            // {
-                 
-            //     List<Node> childList=db.Node.Where(c =>c.Pid==item.Id).ToList();
-            //     if(childList.Count==0)
-            //     {
-            //         if(!string.IsNullOrEmpty(routes.ToString()))
-            //         {
-            //             routes.Append(",");
-            //         }
-            //         routes.Append("{name:'"+item.Name+"',path:'"+item.Path+"',component(resolve){require(['../components/"+item.Com+"'],resolve)}}");
-                   
-            //     }
-            //     else
-            //     {
-            //         if(!string.IsNullOrEmpty(routes.ToString()))
-            //         {
-            //             routes.Append(",");
-            //         }
-            //         StringBuilder strChildren=new StringBuilder();
-            //         foreach(Node child in childList)
-            //         {
-                        
-            //             strChildren.Append("{name:'"+child.Name+"',path:'"+child.Path+"',component(resolve){require(['../components/"+child.Com+"'],resolve)}}");
-            //         }
-                    
-            //          routes.Append("{name:'"+item.Name+"',path:'"+item.Path+"',component(resolve){require(['../components/"+item.Com+"'],resolve)},children:["+strChildren+"]}");
-            //     }
-            //     childList=null;
-            // }
-            // routes.Insert(0,"[").Append("]");//在前后分别补加[ 和 ]，包装成js数组的样子。
-            // return Json(routes);
-            #endregion
+            return Json(routes);          
         }
 
         /// <summary>

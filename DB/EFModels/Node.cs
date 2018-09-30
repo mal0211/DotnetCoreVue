@@ -11,5 +11,7 @@ namespace DotnetCoreVue.DB.EFModels
         public string Path { get; set; }
         public string Com { get; set; }
         public DateTime InsTime { get; set; }
+        public string DisplayName { get; set; }
+        public string Icon { get; set; }
     }
 }

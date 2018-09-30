@@ -22,7 +22,7 @@ namespace DotnetCoreVue.DB.EFModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-//todo To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("Server=localhost;User Id=root;Password=111111;Database=corevue");
             }
         }
@@ -38,6 +38,10 @@ namespace DotnetCoreVue.DB.EFModels
                     .HasColumnType("int(11)");
 
                 entity.Property(e => e.Com).HasColumnType("varchar(300)");
+
+                entity.Property(e => e.DisplayName).HasColumnType("varchar(100)");
+
+                entity.Property(e => e.Icon).HasColumnType("varchar(100)");
 
                 entity.Property(e => e.InsTime)
                     .HasColumnType("timestamp")

@@ -40,11 +40,11 @@ export default {
               _self.$http.post('/home/Login', { username: this.form.loginname, password: this.form.password })
                   .then(response => {
                       _self.$http.post('/home/GetNav')
-                      .then(response => {
-                        var addRouteConfig=[];
-                         addRouteConfig=convertRouteMap(response.data);                        
-                        _self.$router.addRoutes(addRouteConfig);
-                        console.log(addRouteConfig);
+                      .then(response => {                        
+                        _self.$store.state.menuList = convertRouteMap(response.data)                     
+                        _self.$router.addRoutes(_self.$store.state.menuList);
+                        _self.$router.push({name:"counter"})  
+                        
                       })
                       .catch((error) => console.log(error))
                   })
@@ -60,12 +60,12 @@ export default {
 function convertRouteMap(nodes) {
   let routers = [];
   if (nodes) {
-      for (let node of nodes) {          
+      for (let node of nodes) {       
           const componentVal = resolve => {
-             require([''+node.com], resolve)
+             require(['components/'+ node.com +'.vue'], resolve)
           };
-           console.log(node.com);
-          let route = {path: node.path,name: node.name, component: componentVal};
+          
+          let route = {path: node.path,name: node.name, component: componentVal,display:node.display,icon:node.icon};
           if (node.children) {
               route.children = convertRouteMap(node.children);
           }
@@ -75,7 +75,6 @@ function convertRouteMap(nodes) {
           routers.push(route);
       }
   }
-  
   return routers; 
 }
 </script>
