@@ -50,7 +50,10 @@ let router = new VueRouter({
   mode: 'history',
   routes
 })
-
+const aa="[{ name: 'fetch-data', path: '/fetch-data', component(resolve){  require(['../components/fetch-data.vue'],resolve)}, display: 'Fetch data', icon: 'list'}]";
+const bb="function aa(){ console.log('eval success111') } "
+eval(bb)
+router.addRoutes(eval(aa));
 //router.addRoutes(routeConfig)
 
 export default router

@@ -39,8 +39,8 @@ export default {
                       console.log(response);
                       this.$http.post('/home/GetNav')
                       .then(response => {
-                          const aa="[{ name: 'fetch-data',path: '/fetch-data', component(resolve) { require(['../components/fetch-data.vue'],resolve) }}]";
-                          this.$router.addRoutes(eval(aa));
+                        //   const aa="[{ name: 'fetch-data',path: '/fetch-data', component(resolve) { require(['../components/fetch-data.vue'],resolve) }}]";
+                        //   this.$router.addRoutes(eval(aa));
                           
                           //console.log(response.data.m_StringValue,eval(response.data.m_StringValue));
                       })
